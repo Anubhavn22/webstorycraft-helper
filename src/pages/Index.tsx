@@ -11,17 +11,30 @@ const Index = () => {
   const isEmbedded = searchParams.get("embed") === "true";
   const storyId = searchParams.get("storyId");
   const isLandscape = searchParams.get("orientation") === "landscape";
+  const storyDataParam = searchParams.get("storyData");
   
   const [embedStory, setEmbedStory] = useState<StoryData | null>(null);
   
   useEffect(() => {
     if (isEmbedded && storyId) {
+      // First try to get story from URL parameter
+      if (storyDataParam) {
+        try {
+          const storyData = JSON.parse(decodeURIComponent(storyDataParam));
+          setEmbedStory(storyData);
+          return;
+        } catch (e) {
+          console.error("Failed to parse story data from URL", e);
+        }
+      }
+      
+      // Fallback to localStorage if URL param doesn't work
       const story = getStory(storyId);
       if (story) {
         setEmbedStory(story);
       }
     }
-  }, [isEmbedded, storyId]);
+  }, [isEmbedded, storyId, storyDataParam]);
   
   if (isEmbedded) {
     if (embedStory) {

@@ -29,8 +29,18 @@ export const generateEmbedCode = (storyId: string, isLandscape: boolean = false)
   const width = isLandscape ? "540" : "320";
   const height = isLandscape ? "312" : "480";
   
+  // Get the story data and encode it for the URL
+  const story = getStory(storyId);
+  let storyParam = '';
+  
+  if (story) {
+    // Convert story data to a compressed string
+    const storyString = encodeURIComponent(JSON.stringify(story));
+    storyParam = `&storyData=${storyString}`;
+  }
+  
   return `<iframe 
-  src="${baseUrl}?embed=true&storyId=${storyId}${orientation}" 
+  src="${baseUrl}?embed=true&storyId=${storyId}${orientation}${storyParam}" 
   frameborder="0" 
   width="${width}" 
   height="${height}" 
