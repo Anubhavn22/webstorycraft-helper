@@ -5,6 +5,8 @@ import { generateEmbedCode } from "@/utils/storyUtils";
 import { Check, Copy } from "lucide-react";
 import { StoryData } from "@/types";
 import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface EmbedCodeGeneratorProps {
   story: StoryData;
@@ -12,7 +14,8 @@ interface EmbedCodeGeneratorProps {
 
 const EmbedCodeGenerator = ({ story }: EmbedCodeGeneratorProps) => {
   const [copied, setCopied] = useState(false);
-  const embedCode = generateEmbedCode(story.id);
+  const [isLandscape, setIsLandscape] = useState(true);
+  const embedCode = generateEmbedCode(story.id, isLandscape);
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(embedCode);
@@ -22,6 +25,10 @@ const EmbedCodeGenerator = ({ story }: EmbedCodeGeneratorProps) => {
     setTimeout(() => {
       setCopied(false);
     }, 2000);
+  };
+
+  const handleOrientationChange = (checked: boolean) => {
+    setIsLandscape(checked);
   };
 
   return (
@@ -47,9 +54,20 @@ const EmbedCodeGenerator = ({ story }: EmbedCodeGeneratorProps) => {
           )}
         </Button>
       </div>
-      <div className="embed-code">
-        {embedCode}
+      
+      <div className="flex items-center space-x-2 mb-2">
+        <Switch 
+          id="landscape-mode" 
+          checked={isLandscape} 
+          onCheckedChange={handleOrientationChange}
+        />
+        <Label htmlFor="landscape-mode">Landscape orientation</Label>
       </div>
+      
+      <div className="embed-code bg-muted p-4 rounded-md overflow-x-auto">
+        <code className="text-xs font-mono">{embedCode}</code>
+      </div>
+      
       <p className="text-sm text-muted-foreground">
         Paste this code into your Webflow site to embed this web story.
       </p>

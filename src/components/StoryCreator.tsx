@@ -269,7 +269,7 @@ const StoryCreator = () => {
             
             <Card className="overflow-hidden border-0 shadow-lg">
               <CardContent className="p-0">
-                <div className="aspect-[4/5] w-full overflow-hidden">
+                <div className="aspect-video w-full overflow-hidden">
                   <StoryViewer story={story} height="100%" />
                 </div>
               </CardContent>

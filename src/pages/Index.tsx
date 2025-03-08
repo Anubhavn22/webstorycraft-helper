@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import StoryCreator from "@/components/StoryCreator";
@@ -9,6 +10,7 @@ const Index = () => {
   const [searchParams] = useSearchParams();
   const isEmbedded = searchParams.get("embed") === "true";
   const storyId = searchParams.get("storyId");
+  const isLandscape = searchParams.get("orientation") === "landscape";
   
   const [embedStory, setEmbedStory] = useState<StoryData | null>(null);
   
@@ -25,7 +27,11 @@ const Index = () => {
     if (embedStory) {
       return (
         <div className="w-full h-screen">
-          <StoryViewer story={embedStory} isEmbedded={true} />
+          <StoryViewer 
+            story={embedStory} 
+            isEmbedded={true} 
+            className={isLandscape ? "aspect-video" : ""}
+          />
         </div>
       );
     } else {

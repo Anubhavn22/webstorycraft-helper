@@ -134,4 +134,8 @@
   .embed-code {
     @apply font-mono text-xs p-4 bg-muted rounded-md w-full overflow-x-auto;
   }
+  
+  .aspect-video {
+    @apply aspect-[16/9];
+  }
 }
