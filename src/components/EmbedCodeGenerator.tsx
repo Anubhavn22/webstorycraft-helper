@@ -61,7 +61,7 @@ const EmbedCodeGenerator = ({ story }: EmbedCodeGeneratorProps) => {
           checked={isLandscape} 
           onCheckedChange={handleOrientationChange}
         />
-        <Label htmlFor="landscape-mode">Landscape orientation</Label>
+        <Label htmlFor="landscape-mode">Landscape orientation (540x312)</Label>
       </div>
       
       <div className="embed-code bg-muted p-4 rounded-md overflow-x-auto">

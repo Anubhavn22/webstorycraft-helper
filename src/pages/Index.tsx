@@ -26,11 +26,11 @@ const Index = () => {
   if (isEmbedded) {
     if (embedStory) {
       return (
-        <div className="w-full h-screen">
+        <div className="w-full h-screen flex items-center justify-center">
           <StoryViewer 
             story={embedStory} 
             isEmbedded={true} 
-            className={isLandscape ? "aspect-video" : ""}
+            className={isLandscape ? "webstory-landscape" : "webstory-portrait"}
           />
         </div>
       );

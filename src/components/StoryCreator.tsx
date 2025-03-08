@@ -269,8 +269,10 @@ const StoryCreator = () => {
             
             <Card className="overflow-hidden border-0 shadow-lg">
               <CardContent className="p-0">
-                <div className="aspect-video w-full overflow-hidden">
-                  <StoryViewer story={story} height="100%" />
+                <div className="flex justify-center">
+                  <div className="webstory-landscape overflow-hidden">
+                    <StoryViewer story={story} height="100%" />
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -8,13 +8,15 @@ import { cn } from "@/lib/utils";
 interface StoryViewerProps {
   story: StoryData;
   height?: string | number;
+  width?: string | number;
   className?: string;
   isEmbedded?: boolean;
 }
 
 const StoryViewer = ({ 
   story, 
-  height = "100%", 
+  height = "100%",
+  width = "100%", 
   className, 
   isEmbedded = false 
 }: StoryViewerProps) => {
@@ -51,7 +53,7 @@ const StoryViewer = ({
         "story-container relative",
         className
       )} 
-      style={{ height }}
+      style={{ height, width }}
     >
       {/* Story slides */}
       {story.slides.map((slide, index) => (

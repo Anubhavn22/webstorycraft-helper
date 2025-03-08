@@ -1,3 +1,4 @@
+
 import { StoryData, StorySlide } from "../types";
 
 export const generateId = (): string => {
@@ -25,13 +26,15 @@ export const createNewSlide = (imageUrl: string): StorySlide => {
 export const generateEmbedCode = (storyId: string, isLandscape: boolean = false) => {
   const baseUrl = window.location.origin;
   const orientation = isLandscape ? '&orientation=landscape' : '';
+  const width = isLandscape ? "540" : "320";
+  const height = isLandscape ? "312" : "480";
   
   return `<iframe 
   src="${baseUrl}?embed=true&storyId=${storyId}${orientation}" 
   frameborder="0" 
-  width="100%" 
-  height="500px" 
-  style="max-width: 100%; ${isLandscape ? 'aspect-ratio: 16/9;' : 'aspect-ratio: 4/5;'}" 
+  width="${width}" 
+  height="${height}" 
+  style="border: none; border-radius: 12px; overflow: hidden;" 
   allowfullscreen
 ></iframe>`;
 };

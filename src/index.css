@@ -138,4 +138,14 @@
   .aspect-video {
     @apply aspect-[16/9];
   }
+  
+  .webstory-landscape {
+    width: 540px;
+    height: 312px;
+  }
+  
+  .webstory-portrait {
+    width: 320px;
+    height: 480px;
+  }
 }
