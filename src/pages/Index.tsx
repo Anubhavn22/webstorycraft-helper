@@ -14,6 +14,7 @@ const Index = () => {
   const storyDataParam = searchParams.get("storyData");
   
   const [embedStory, setEmbedStory] = useState<StoryData | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   
   useEffect(() => {
     if (isEmbedded && storyId) {
@@ -21,10 +22,21 @@ const Index = () => {
       if (storyDataParam) {
         try {
           const storyData = JSON.parse(decodeURIComponent(storyDataParam));
-          setEmbedStory(storyData);
-          return;
+          if (storyData && storyData.slides && Array.isArray(storyData.slides)) {
+            // Validate story data has required properties
+            if (storyData.slides.length > 0 && storyData.slides[0].imageUrl) {
+              setEmbedStory(storyData);
+              setLoadError(null);
+              return;
+            } else {
+              setLoadError("Story has no slides");
+            }
+          } else {
+            setLoadError("Invalid story format");
+          }
         } catch (e) {
           console.error("Failed to parse story data from URL", e);
+          setLoadError("Failed to load story data");
         }
       }
       
@@ -32,12 +44,15 @@ const Index = () => {
       const story = getStory(storyId);
       if (story) {
         setEmbedStory(story);
+        setLoadError(null);
+      } else {
+        setLoadError("Story not found in local storage");
       }
     }
   }, [isEmbedded, storyId, storyDataParam]);
   
   if (isEmbedded) {
-    if (embedStory) {
+    if (embedStory && embedStory.slides && embedStory.slides.length > 0) {
       return (
         <div className="w-full h-screen flex items-center justify-center">
           <StoryViewer 
@@ -49,8 +64,11 @@ const Index = () => {
       );
     } else {
       return (
-        <div className="w-full h-screen flex items-center justify-center bg-muted">
-          <p className="text-muted-foreground">Story not found</p>
+        <div className="w-full h-screen flex flex-col items-center justify-center bg-muted gap-2 p-4 text-center">
+          <p className="text-muted-foreground font-medium">Story not found</p>
+          {loadError && (
+            <p className="text-xs text-muted-foreground/70">{loadError}</p>
+          )}
         </div>
       );
     }

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { generateEmbedCode } from "@/utils/storyUtils";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, ExternalLink } from "lucide-react";
 import { StoryData } from "@/types";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
@@ -68,9 +68,19 @@ const EmbedCodeGenerator = ({ story }: EmbedCodeGeneratorProps) => {
         <code className="text-xs font-mono">{embedCode}</code>
       </div>
       
-      <p className="text-sm text-muted-foreground">
-        Paste this code into your Webflow site to embed this web story.
-      </p>
+      <div className="bg-blue-50 border border-blue-200 p-3 rounded-md text-sm text-blue-800">
+        <p className="flex items-center gap-1.5 font-medium mb-1">
+          <ExternalLink className="h-4 w-4" />
+          <span>Webflow Embedding Instructions</span>
+        </p>
+        <ol className="list-decimal list-inside space-y-1 ml-1">
+          <li>Copy the embed code above</li>
+          <li>In Webflow, add an "Embed" element to your page</li>
+          <li>Paste the code into the embed element</li>
+          <li>Make sure the story has at least one slide before embedding</li>
+          <li>Test the embed to verify the story displays correctly</li>
+        </ol>
+      </div>
     </div>
   );
 };

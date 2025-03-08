@@ -34,9 +34,25 @@ export const generateEmbedCode = (storyId: string, isLandscape: boolean = false)
   let storyParam = '';
   
   if (story) {
-    // Convert story data to a compressed string
-    const storyString = encodeURIComponent(JSON.stringify(story));
-    storyParam = `&storyData=${storyString}`;
+    try {
+      // Create a minimal version of the story with just the essential data
+      const minimalStory = {
+        id: story.id,
+        title: story.title,
+        slides: story.slides.map(slide => ({
+          id: slide.id,
+          imageUrl: slide.imageUrl,
+          title: slide.title || '',
+          description: slide.description || ''
+        }))
+      };
+      
+      // Use a more compact JSON representation
+      const storyString = encodeURIComponent(JSON.stringify(minimalStory));
+      storyParam = `&storyData=${storyString}`;
+    } catch (e) {
+      console.error("Failed to encode story data", e);
+    }
   }
   
   return `<iframe 
